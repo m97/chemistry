@@ -18,17 +18,17 @@ inventory_image = "chemistry_test_tube_water.png"
 
 minetest.register_craftitem("chemistry:hydrogen", {	
 description = "H - Hydrogen",
-inventory_image = "chemistry_substance.png"
+inventory_image = "chemistry_hydrogen.png"
 })
 
 minetest.register_craftitem("chemistry:carbon", {	
 description = "C - Carbon",
-inventory_image = "chemistry_substance.png"
+inventory_image = "chemistry_carbon.png"
 })
 
 minetest.register_craftitem("chemistry:oxygen", {	
 description = "O - Oxygen",
-inventory_image = "chemistry_substance.png"
+inventory_image = "chemistry_oxygen.png"
 })
 
 
