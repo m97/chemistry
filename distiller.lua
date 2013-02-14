@@ -36,7 +36,7 @@ minetest.register_alias("distiller","distiller_active")
 minetest.register_craft({
 	output = 'chemistry:distiller',
 	recipe = {
-		{'technic:copper_lv_copper_cable', 'technic:logic_unit', 'technic:copper_lv_copper_cable'},
+		{'technic:lv_cable','technic:control_logic_unit', 'technic:lv_cable'},
 		{'chemistry:test_tube', 'default:steelblock', 'chemistry:test_tube'},
 		{'technic:copper_coil', 'chemistry:test_tube', 'technic:copper_coil'},
 	}
