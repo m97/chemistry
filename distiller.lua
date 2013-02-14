@@ -27,6 +27,10 @@ end
 
 register_distiller_recipe ("chemistry:test_tube",8, "bucket:bucket_water",1, "chemistry:test_tube_water",8)
 register_distiller_recipe ("chemistry:test_tube",2, "default:tree",1, "chemistry:celuose",2)
+register_distiller_recipe ("chemistry:test_tube",4, "chemistry:marble_coal_dust",1, "chemistry:calcium",2,"chemistry:carbon_dioxide",2)
+register_distiller_recipe ("chemistry:test_tube",1, "chemistry:marble_dust",1, "chemistry:calcium_carbonate",1)
+register_distiller_recipe ("chemistry:test_tube",1, "technic:coal_dust",1, "chemistry:carbon",1)
+
 
 minetest.register_alias("distiller","distiller_active")
 minetest.register_craft({
