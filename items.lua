@@ -145,3 +145,13 @@ minetest.register_craft({
 			"chemistry:celuose","chemistry:celuose",
 		}
 })
+
+minetest.register_craft({
+		type = "shapeless",
+		output = "chemistry:acetylene",
+		recipe = {
+			"chemistry:carbon","chemistry:carbon","chemistry:hydrogen",
+			"chemistry:hydrogen",
+		},
+replacements = {{"chemistry:carbon", "chemistry:test_tube"},{"chemistry:carbon", "chemistry:test_tube"},{"chemistry:hydrogen", "chemistry:test_tube"}}
+})
