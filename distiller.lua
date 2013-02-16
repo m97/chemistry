@@ -154,7 +154,7 @@ minetest.register_abm({
 		dst_index=nil
 
 		if src_item1 and src_item2 then 
-				dst_index=get_cook_result(src_item1,src_item2) 
+				dst_index=get_distiling_result(src_item1,src_item2) 
 				end
 
 
@@ -218,7 +218,7 @@ minetest.register_abm({
 end,		
 })
 
-function get_cook_result(src_item1, src_item2)
+function get_distiling_result(src_item1, src_item2)
 local counter=registered_recipes_count-1
 for i=1, counter,1 do
 if	distiller_recipes[i].src1_name==src_item1["name"] and
