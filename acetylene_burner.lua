@@ -189,7 +189,7 @@ minetest.register_abm({
 
 
 				else
-					print("Furnace inventory full!")
+					print("Acetylene Burner inventory full!")
 				end
 				meta:set_string("src_time", 0)
 			end
@@ -214,7 +214,7 @@ minetest.register_abm({
 		if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 			local percent = math.floor(meta:get_float("fuel_time") /
 					meta:get_float("fuel_totaltime") * 100)
-			meta:set_string("infotext","Furnace active: "..percent.."%")
+			meta:set_string("infotext","Acetylene Burner active: "..percent.."%")
 			hacky_swap_node(pos,"chemistry:acetylene_burner_active")
 			meta:set_string("formspec",
 				"size[8,9]"..
@@ -248,7 +248,7 @@ minetest.register_abm({
 		end
 
 		if fuel.time <= 0 then
-			meta:set_string("infotext","Furnace out of fuel")
+			meta:set_string("infotext","Acetylene Burner out of fuel")
 			hacky_swap_node(pos,"chemistry:acetylene_burner")
 			meta:set_string("formspec", acetylene_burner_formspec)
 			return
@@ -256,7 +256,7 @@ minetest.register_abm({
 
 		if dst_index==nil then
 			if was_active then
-				meta:set_string("infotext","Furnace is empty")
+				meta:set_string("infotext","Acetylene Burner is empty")
 				hacky_swap_node(pos,"chemistry:acetylene_burner")
 				meta:set_string("formspec", acetylene_burner_formspec)
 			end
