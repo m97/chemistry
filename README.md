@@ -2,7 +2,9 @@ chemistry
 =========
 
 chemistry mod for minetest
+
 Create by: m97 minetest nick(1244)
+
 License:   GPLv2
 
 
