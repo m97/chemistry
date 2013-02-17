@@ -4,7 +4,7 @@ minetest.register_alias("carbide_lamp_active","chemistry:carbide_lamp_active")
 minetest.register_craft({
 	output = 'chemistry:carbide_lamp',
 	recipe = {
-		{'technic:stainlesssteel', 'default:glass', 'technic:stainlesssteel'},
+		{'technic:stainless_steel_ingot', 'default:glass', 'technic:stainless_steel_ingot'},
 		{'default:glass', 'chemistry:calcium_carbide', 'default:glass'},
 		{'moreores:copper_ingot', 'chemistry:test_tube_water', 'moreores:copper_ingot'},
 	}
@@ -106,7 +106,7 @@ minetest.register_abm({
 		if inv:is_empty("src")==false  then 
 		local srcstack = inv:get_stack("src", 1)
 		fuel_item=srcstack:to_table()
-		if fuel_item["name"]== "chemistry:test_tube_water" then
+		if fuel_item["name"]== "chemistry:test_tube_water" or fuel_item["name"] == "chemistry:test_tube_distilated_water" then
 		if water_level < 40 then
 		srcstack:take_item()
 		inv:set_stack("src", 1, srcstack)
@@ -124,6 +124,7 @@ minetest.register_abm({
 		srcstack2:take_item()
 		inv:set_stack("src2", 1, srcstack2)
 		meta:set_float("burn_time",180)
+		burn_time = 180;
 		meta:set_float("water_level",meta:get_float("water_level")-1)
 		hacky_swap_node(pos,"chemistry:carbide_lamp_active")
 		meta:set_float("is_on",1)
@@ -138,6 +139,7 @@ minetest.register_abm({
 		if is_on == 1 then
 		if burn_time == 0 then
 		hacky_swap_node(pos,"chemistry:carbide_lamp")
+		meta:set_float("is_on",0)
 		end
 		end
 		end,
