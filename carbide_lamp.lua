@@ -21,7 +21,7 @@ carbide_lamp_formspec =
 
 minetest.register_node("chemistry:carbide_lamp", {
 	description = "Carbide Lamp",
-	tiles = {"chemistry_carbide_lamp_front.png", "chemistry_carbide_lamp_bottom.png", "chemistry_carbide_lamp_front.png",
+	tiles = {"chemistry_carbide_lamp_top.png", "chemistry_carbide_lamp_top.png", "chemistry_carbide_lamp_front.png",
 		"chemistry_carbide_lamp_front.png", "chemistry_carbide_lamp_front.png", "chemistry_carbide_lamp_front.png"},
 	paramtype2 = "facedir",
 	groups = {cracky=2},
@@ -52,8 +52,8 @@ minetest.register_node("chemistry:carbide_lamp", {
 
 minetest.register_node("chemistry:carbide_lamp_active", {
 	description = "Carbide Lamp",
-	tiles = {"chemistry_carbide_lamp_front.png", "chemistry_carbide_lamp_bottom.png", "chemistry_carbide_lamp_front.png",
-		"chemistry_carbide_lamp_front.png", "chemistry_carbide_lamp_front.png", "chemistry_carbide_lamp_front.png"},
+	tiles = {"chemistry_carbide_lamp_top.png", "chemistry_carbide_lamp_top.png", "chemistry_carbide_lamp_front_active.png",
+		"chemistry_carbide_lamp_front_active.png", "chemistry_carbide_lamp_front_active.png", "chemistry_carbide_lamp_front_active.png"},
 	paramtype2 = "facedir",
 	light_source = 35,
 	drop = "chemistry:carbide_lamp",
