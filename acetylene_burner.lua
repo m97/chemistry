@@ -64,9 +64,11 @@ acetylene_burner_formspec =
 	
 minetest.register_node("chemistry:acetylene_burner", {
 	description = "Acetylene Burner",
-tiles = {"chemistry_acetylene_burner_top.png", "chemistry_acetylene_burner_top.png", "chemistry_acetylene_burner_front.png",
-		"chemistry_acetylene_burner_front.png", "chemistry_acetylene_burner_front.png", "chemistry_acetylene_burner_front.png"},
+	drawtype = "plantlike",
+	tiles = {"chemistry_acetylene_burner_front.png"},
+	paramtype = "light",
 	paramtype2 = "facedir",
+	visual_scale = 1.1,
 	groups = {cracky=2},
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_stone_defaults(),
@@ -95,9 +97,11 @@ tiles = {"chemistry_acetylene_burner_top.png", "chemistry_acetylene_burner_top.p
 
 minetest.register_node("chemistry:acetylene_burner_active", {
 	description = "Acetylene Burner",
-tiles = {"chemistry_acetylene_burner_top.png", "chemistry_acetylene_burner_top.png", "chemistry_acetylene_burner_front.png",
-		"chemistry_acetylene_burner_front.png", "chemistry_acetylene_burner_front.png", "chemistry_acetylene_burner_front.png"},
+	drawtype = "plantlike",
+	tiles = {name="chemistry_acetylene_burner_active.png"},
 	paramtype2 = "facedir",
+	paramtype = "light",
+	visual_scale = 1.1,
 	light_source = 8,
 	drop = "chemistry:acetylene_burner",
 	groups = {cracky=2, not_in_creative_inventory=1},
