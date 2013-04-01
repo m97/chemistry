@@ -1,0 +1,1 @@
+register_alloy_recipe ("chemistry:aluminum_alloy_base",2, "chemistry:silicon",1, "chemistry:aluminum_alloy",2)

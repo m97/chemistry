@@ -1,36 +1,36 @@
 acetylene_burner_recipes ={}
 
-registered_recipes_count=1
+registered_acetylene_burner_recipes_count=1
 
 function register_acetylene_burner_recipe (string1,count1, string2,count2, string3,count3,string4,count4,string5,count5,string6,count6)
-acetylene_burner_recipes[registered_recipes_count]={}
-acetylene_burner_recipes[registered_recipes_count].src1_name=string1
-acetylene_burner_recipes[registered_recipes_count].src1_count=count1
-acetylene_burner_recipes[registered_recipes_count].src2_name=string2
-acetylene_burner_recipes[registered_recipes_count].src2_count=count2
-acetylene_burner_recipes[registered_recipes_count].dst_name=string3
-acetylene_burner_recipes[registered_recipes_count].dst_count=count3
-acetylene_burner_recipes[registered_recipes_count].dst2_name=string4
-acetylene_burner_recipes[registered_recipes_count].dst2_count=count4
-acetylene_burner_recipes[registered_recipes_count].dst3_name=string5
-acetylene_burner_recipes[registered_recipes_count].dst3_count=count5
-acetylene_burner_recipes[registered_recipes_count].dst4_name=string6
-acetylene_burner_recipes[registered_recipes_count].dst4_count=count6
-registered_recipes_count=registered_recipes_count+1
-acetylene_burner_recipes[registered_recipes_count]={}
-acetylene_burner_recipes[registered_recipes_count].src1_name=string2
-acetylene_burner_recipes[registered_recipes_count].src1_count=count2
-acetylene_burner_recipes[registered_recipes_count].src2_name=string1
-acetylene_burner_recipes[registered_recipes_count].src2_count=count1
-acetylene_burner_recipes[registered_recipes_count].dst_name=string3
-acetylene_burner_recipes[registered_recipes_count].dst_count=count3
-acetylene_burner_recipes[registered_recipes_count].dst2_name=string4
-acetylene_burner_recipes[registered_recipes_count].dst2_count=count4
-acetylene_burner_recipes[registered_recipes_count].dst3_name=string5
-acetylene_burner_recipes[registered_recipes_count].dst3_count=count5
-acetylene_burner_recipes[registered_recipes_count].dst4_name=string6
-acetylene_burner_recipes[registered_recipes_count].dst4_count=count6
-registered_recipes_count=registered_recipes_count+1
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count]={}
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].src1_name=string1
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].src1_count=count1
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].src2_name=string2
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].src2_count=count2
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst_name=string3
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst_count=count3
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst2_name=string4
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst2_count=count4
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst3_name=string5
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst3_count=count5
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst4_name=string6
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst4_count=count6
+registered_acetylene_burner_recipes_count=registered_acetylene_burner_recipes_count+1
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count]={}
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].src1_name=string2
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].src1_count=count2
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].src2_name=string1
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].src2_count=count1
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst_name=string3
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst_count=count3
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst2_name=string4
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst2_count=count4
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst3_name=string5
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst3_count=count5
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst4_name=string6
+acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst4_count=count6
+registered_acetylene_burner_recipes_count=registered_acetylene_burner_recipes_count+1
 end
 
 register_acetylene_burner_recipe("chemistry:test_tube_distilated_water",1,"chemistry:test_tube",2,"chemistry:hydrogen",2,"chemistry:oxygen",1)
@@ -40,6 +40,7 @@ register_acetylene_burner_recipe("chemistry:carbon_dioxide",1,"chemistry:test_tu
 register_acetylene_burner_recipe("chemistry:calcium_carbide",1,"chemistry:test_tube",2,"chemistry:calcium",1,"chemistry:carbon",2)
 register_acetylene_burner_recipe("chemistry:calcium_hydroxide",1,"chemistry:test_tube",4,"chemistry:calcium",1,"chemistry:oxygen",2,"chemistry:hydrogen",2)
 register_acetylene_burner_recipe("chemistry:acetylene",1,"chemistry:test_tube",3,"chemistry:carbon",2,"chemistry:hydrogen",2)
+register_acetylene_burner_recipe("chemistry:silicon_dioxide",1,"chemistry:test_tube",3,"chemistry:silicon",1,"chemistry:oxygen",2)
 
 minetest.register_alias("acetylene_burner","acetylene_burner_active")
 minetest.register_craft({
@@ -275,7 +276,7 @@ end,
 })
 
 function get_burning_result(src_item1, src_item2)
-local counter=registered_recipes_count-1
+local counter=registered_acetylene_burner_recipes_count-1
 for i=1, counter,1 do
 if	acetylene_burner_recipes[i].src1_name==src_item1["name"] and
 	acetylene_burner_recipes[i].src2_name==src_item2["name"] and

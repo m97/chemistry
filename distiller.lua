@@ -1,28 +1,28 @@
 distiller_recipes ={}
 
-registered_recipes_count=1
+registered_distiller_recipes_count=1
 
 function register_distiller_recipe (string1,count1, string2,count2, string3,count3,string4,count4)
-distiller_recipes[registered_recipes_count]={}
-distiller_recipes[registered_recipes_count].src1_name=string1
-distiller_recipes[registered_recipes_count].src1_count=count1
-distiller_recipes[registered_recipes_count].src2_name=string2
-distiller_recipes[registered_recipes_count].src2_count=count2
-distiller_recipes[registered_recipes_count].dst_name=string3
-distiller_recipes[registered_recipes_count].dst_count=count3
-distiller_recipes[registered_recipes_count].dst2_name=string4
-distiller_recipes[registered_recipes_count].dst2_count=count4
-registered_recipes_count=registered_recipes_count+1
-distiller_recipes[registered_recipes_count]={}
-distiller_recipes[registered_recipes_count].src1_name=string2
-distiller_recipes[registered_recipes_count].src1_count=count2
-distiller_recipes[registered_recipes_count].src2_name=string1
-distiller_recipes[registered_recipes_count].src2_count=count1
-distiller_recipes[registered_recipes_count].dst_name=string3
-distiller_recipes[registered_recipes_count].dst_count=count3
-distiller_recipes[registered_recipes_count].dst2_name=string4
-distiller_recipes[registered_recipes_count].dst2_count=count4
-registered_recipes_count=registered_recipes_count+1
+distiller_recipes[registered_distiller_recipes_count]={}
+distiller_recipes[registered_distiller_recipes_count].src1_name=string1
+distiller_recipes[registered_distiller_recipes_count].src1_count=count1
+distiller_recipes[registered_distiller_recipes_count].src2_name=string2
+distiller_recipes[registered_distiller_recipes_count].src2_count=count2
+distiller_recipes[registered_distiller_recipes_count].dst_name=string3
+distiller_recipes[registered_distiller_recipes_count].dst_count=count3
+distiller_recipes[registered_distiller_recipes_count].dst2_name=string4
+distiller_recipes[registered_distiller_recipes_count].dst2_count=count4
+registered_distiller_recipes_count=registered_distiller_recipes_count+1
+distiller_recipes[registered_distiller_recipes_count]={}
+distiller_recipes[registered_distiller_recipes_count].src1_name=string2
+distiller_recipes[registered_distiller_recipes_count].src1_count=count2
+distiller_recipes[registered_distiller_recipes_count].src2_name=string1
+distiller_recipes[registered_distiller_recipes_count].src2_count=count1
+distiller_recipes[registered_distiller_recipes_count].dst_name=string3
+distiller_recipes[registered_distiller_recipes_count].dst_count=count3
+distiller_recipes[registered_distiller_recipes_count].dst2_name=string4
+distiller_recipes[registered_distiller_recipes_count].dst2_count=count4
+registered_distiller_recipes_count=registered_distiller_recipes_count+1
 end
 
 register_distiller_recipe ("chemistry:test_tube_water",1, "chemistry:test_tube_water",1, "chemistry:test_tube_distilated_water",2)
@@ -30,6 +30,7 @@ register_distiller_recipe ("chemistry:test_tube",2, "default:tree",1, "chemistry
 register_distiller_recipe ("chemistry:test_tube",4, "chemistry:marble_coal_dust",1, "chemistry:calcium",2,"chemistry:carbon_dioxide",2)
 register_distiller_recipe ("chemistry:test_tube",1, "chemistry:marble_dust",1, "chemistry:calcium_carbonate",1)
 register_distiller_recipe ("chemistry:test_tube",1, "technic:coal_dust",1, "chemistry:carbon",1)
+register_distiller_recipe ("chemistry:test_tube",1, "default:sand",1, "chemistry:silicon_dioxide",1)
 
 
 minetest.register_alias("distiller","distiller_active")
@@ -219,7 +220,8 @@ end,
 })
 
 function get_distiling_result(src_item1, src_item2)
-local counter=registered_recipes_count-1
+if src_item1 and src_item2 then
+local counter=registered_distiller_recipes_count-1
 for i=1, counter,1 do
 if	distiller_recipes[i].src1_name==src_item1["name"] and
 	distiller_recipes[i].src2_name==src_item2["name"] and
@@ -228,6 +230,7 @@ if	distiller_recipes[i].src1_name==src_item1["name"] and
 	then return i end
 end
 return nil
+end
 end
 
 register_LV_machine ("chemistry:distiller","RE")
