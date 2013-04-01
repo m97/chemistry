@@ -17,3 +17,6 @@ Added acetylene burner and some substances.
 
 0.03
 Added carbide lamp.
+
+0.5 
+Added molecular crafting, aluminum ore, new items, substances and elements. 
