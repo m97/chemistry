@@ -6,7 +6,7 @@ minetest.register_craft({
 	recipe = {
 		{'technic:stainless_steel_ingot', 'default:glass', 'technic:stainless_steel_ingot'},
 		{'default:glass', 'chemistry:calcium_carbide', 'default:glass'},
-		{'moreores:copper_ingot', 'chemistry:test_tube_water', 'moreores:copper_ingot'},
+		{'default:copper_ingot', 'chemistry:test_tube_water', 'default:copper_ingot'},
 	}
 })
 

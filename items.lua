@@ -255,7 +255,7 @@ minetest.register_craft({
 		recipe = {
 			{'technic:control_logic_unit','technic:rebar','technic:control_logic_unit'},
 			{'technic:motor','chemistry:stamen','technic:motor'},
-			{'','technic:diamond',''},
+			{'','default:diamond',''},
 		}
 })
 
@@ -263,7 +263,7 @@ minetest.register_craft({
 		type = "shapeless",
 		output = "chemistry:aluminum_alloy_base 3",
 		recipe = {
-			"chemistry:aluminum_ingot","chemistry:aluminum_ingot","moreores:copper_ingot"
+			"chemistry:aluminum_ingot","chemistry:aluminum_ingot","default:copper_ingot"
 		}
 })
 

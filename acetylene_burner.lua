@@ -48,7 +48,7 @@ minetest.register_craft({
 	recipe = {
 		{'moreores:silver_ingot', 'pipeworks:mese_tube_000000', 'moreores:silver_ingot'},
 		{'chemistry:acetylene', 'default:steelblock', 'chemistry:acetylene'},
-		{'technic:control_logic_unit', 'moreores:gold_ingot', 'technic:control_logic_unit'},
+		{'technic:control_logic_unit', 'default:gold_ingot', 'technic:control_logic_unit'},
 	}
 })
 
