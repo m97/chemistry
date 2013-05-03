@@ -25,12 +25,6 @@ distiller_recipes[registered_distiller_recipes_count].dst2_count=count4
 registered_distiller_recipes_count=registered_distiller_recipes_count+1
 end
 
-register_distiller_recipe ("chemistry:test_tube_water",1, "chemistry:test_tube_water",1, "chemistry:test_tube_distilated_water",2)
-register_distiller_recipe ("chemistry:test_tube",2, "default:tree",1, "chemistry:celuose",2)
-register_distiller_recipe ("chemistry:test_tube",4, "chemistry:marble_coal_dust",1, "chemistry:calcium",2,"chemistry:carbon_dioxide",2)
-register_distiller_recipe ("chemistry:test_tube",1, "chemistry:marble_dust",1, "chemistry:calcium_carbonate",1)
-register_distiller_recipe ("chemistry:test_tube",1, "technic:coal_dust",1, "chemistry:carbon",1)
-register_distiller_recipe ("chemistry:test_tube",1, "default:sand",1, "chemistry:silicon_dioxide",1)
 
 
 minetest.register_alias("distiller","distiller_active")

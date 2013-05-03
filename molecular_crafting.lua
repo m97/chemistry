@@ -1,4 +1,54 @@
+function random_dust()
+local i = math.random(0,100)
+if i > 80 then
+local dust = math.random(0,100)
+if dust == 0 then
+return "technic:mithril_dust"
+end
+if dust > 0 then
+if dust < 4 then
+return "technic:gold_dust"
+end
+end
+if dust > 3 then
+if dust < 10 then
+return "technic:silver_dust"
+end
+end
 
+if dust > 9 then
+if dust < 20  then
+return "technic:chromium_dust"
+end
+end
+
+if dust > 19 then
+if dust < 40 then
+return "technic:zinc_dust"
+end
+end
+
+if dust > 39 then
+if dust < 60 then
+return "technic:tin_dust"
+end
+end
+
+if dust > 59 then
+if dust < 80 then
+return "technic:copper_dust"
+end
+end
+if dust > 79 then
+if dust < 100 then
+return "technic:iron_dust"
+end
+end
+end
+if i <= 90 then
+return nil
+end
+end
 molecular_crafting_recipes ={}
 
 registered_molecular_recipes_count=1
@@ -27,7 +77,6 @@ molecular_crafting_recipes[registered_molecular_recipes_count].tst_count=count4
 registered_molecular_recipes_count=registered_molecular_recipes_count+1
 end
 
-register_molecular_crafting_recipe ("chemistry:silicon",2, nil,0,"technic:silicon_wafer",1,"chemistry:test_tube",2)
 
 
 
@@ -48,7 +97,7 @@ molecular_crafting_formspec =
 	"image[1,1;1,2;technic_power_meter_bg.png]"..
 	"list[current_name;src;3,1;1,1;]"..
 	"list[current_name;src2;3,2;1,1;]"..
-	"list[current_name;dst;5,1;1,1;]"..
+	"list[current_name;dst;5,1;3,2;]"..
 	"list[current_name;tst;4,3;1,1;]"..
 	"list[current_player;main;0,5;8,4;]"..
 	"label[0,0;Molecular Crafting]"..
@@ -74,7 +123,7 @@ minetest.register_node("chemistry:molecular_crafting", {
 		local inv = meta:get_inventory()
 		inv:set_size("src", 1)
 		inv:set_size("src2", 1)
-		inv:set_size("dst", 1)
+		inv:set_size("dst", 6)
 		inv:set_size("tst", 1)
 		local EU_used  = 0
 		local molecular_crafting_is_working = 0
@@ -197,7 +246,7 @@ meta:set_string("formspec",
 (load)..":technic_power_meter_fg.png]"..
 "list[current_name;src;3,1;1,1;]"..
 "list[current_name;src2;3,2;1,1;]"..
-"list[current_name;dst;5,1;1,1;]"..
+"list[current_name;dst;5,1;3,2;]"..
 "list[current_name;tst;4,3;1,1;]"..
 "list[current_player;main;0,5;8,4;]"..
 "label[0,0;Molecular Crafting]"..
@@ -238,6 +287,12 @@ dst_stack["name"]=molecular_crafting_recipes[dst_index].dst_name
 dst_stack["count"]=molecular_crafting_recipes[dst_index].dst_count
 dst_stack2["name"]=molecular_crafting_recipes[dst_index].tst_name
 dst_stack2["count"]=molecular_crafting_recipes[dst_index].tst_count
+if src_item1["name"] == "default:cobble" then
+dst_stack["name"]= random_dust()
+dst_stack["count"]=1
+dst_stack2["name"]="default:sand"
+dst_stack2["count"]=0
+end
 if inv:room_for_item("dst",dst_stack) then
 -- Put result in "dst" list
 inv:add_item("dst",dst_stack)
@@ -263,7 +318,6 @@ end
 end
 end
 end
-
 
 
 

@@ -33,14 +33,7 @@ acetylene_burner_recipes[registered_acetylene_burner_recipes_count].dst4_count=c
 registered_acetylene_burner_recipes_count=registered_acetylene_burner_recipes_count+1
 end
 
-register_acetylene_burner_recipe("chemistry:test_tube_distilated_water",1,"chemistry:test_tube",2,"chemistry:hydrogen",2,"chemistry:oxygen",1)
-register_acetylene_burner_recipe("chemistry:celuose",1,"chemistry:test_tube",20,"chemistry:hydrogen",10,"chemistry:oxygen",5,"chemistry:carbon",6)
-register_acetylene_burner_recipe("chemistry:calcium_carbonate",1,"chemistry:test_tube",4,"chemistry:calcium",1,"chemistry:oxygen",3,"chemistry:carbon",1)
-register_acetylene_burner_recipe("chemistry:carbon_dioxide",1,"chemistry:test_tube",2,"chemistry:carbon",1,"chemistry:oxygen",2)
-register_acetylene_burner_recipe("chemistry:calcium_carbide",1,"chemistry:test_tube",2,"chemistry:calcium",1,"chemistry:carbon",2)
-register_acetylene_burner_recipe("chemistry:calcium_hydroxide",1,"chemistry:test_tube",4,"chemistry:calcium",1,"chemistry:oxygen",2,"chemistry:hydrogen",2)
-register_acetylene_burner_recipe("chemistry:acetylene",1,"chemistry:test_tube",3,"chemistry:carbon",2,"chemistry:hydrogen",2)
-register_acetylene_burner_recipe("chemistry:silicon_dioxide",1,"chemistry:test_tube",3,"chemistry:silicon",1,"chemistry:oxygen",2)
+
 
 minetest.register_alias("acetylene_burner","acetylene_burner_active")
 minetest.register_craft({
