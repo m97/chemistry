@@ -49,35 +49,35 @@ if i <= 90 then
 return nil
 end
 end
+
 molecular_crafting_recipes ={}
 
-registered_molecular_recipes_count=1
-
-function register_molecular_crafting_recipe (string1,count1, string2,count2, string3, count3, string4, count4)
-molecular_crafting_recipes[registered_molecular_recipes_count]={}
-molecular_crafting_recipes[registered_molecular_recipes_count].src1_name=string1
-molecular_crafting_recipes[registered_molecular_recipes_count].src1_count=count1
-molecular_crafting_recipes[registered_molecular_recipes_count].src2_name=string2
-molecular_crafting_recipes[registered_molecular_recipes_count].src2_count=count2
-molecular_crafting_recipes[registered_molecular_recipes_count].dst_name=string3
-molecular_crafting_recipes[registered_molecular_recipes_count].dst_count=count3
-molecular_crafting_recipes[registered_molecular_recipes_count].tst_name=string4
-molecular_crafting_recipes[registered_molecular_recipes_count].tst_count=count4
-
-registered_molecular_recipes_count=registered_molecular_recipes_count+1
-molecular_crafting_recipes[registered_molecular_recipes_count]={}
-molecular_crafting_recipes[registered_molecular_recipes_count].src1_name=string2
-molecular_crafting_recipes[registered_molecular_recipes_count].src1_count=count2
-molecular_crafting_recipes[registered_molecular_recipes_count].src2_name=string1
-molecular_crafting_recipes[registered_molecular_recipes_count].src2_count=count1
-molecular_crafting_recipes[registered_molecular_recipes_count].dst_name=string3
-molecular_crafting_recipes[registered_molecular_recipes_count].dst_count=count3
-molecular_crafting_recipes[registered_molecular_recipes_count].tst_name=string4
-molecular_crafting_recipes[registered_molecular_recipes_count].tst_count=count4
-registered_molecular_recipes_count=registered_molecular_recipes_count+1
-end
+register_molecular_crafting_recipe = function(metal1, count1, metal2, count2, result, count3, result2, count4)
+				   molecular_crafting_recipes[metal1..metal2] = { src1_count = count1, src2_count = count2, dst_name = result, dst_count = count3, dst2_name = result2, dst2_count = count4 }
+				end
 
 
+get_molecular_crafting_recipe = function(metal1, metal2)
+			      -- Check for both combinations of metals and for the right amount in both
+				if not metal2 == nil then
+			      if molecular_crafting_recipes[metal1.name..metal2.name]
+				 and metal1.count >= molecular_crafting_recipes[metal1.name..metal2.name].src1_count
+				 and metal2.count >= molecular_crafting_recipes[metal1.name..metal2.name].src2_count then
+				 return molecular_crafting_recipes[metal1.name..metal2.name]
+			      elseif molecular_crafting_recipes[metal2.name..metal1.name]
+				 and metal2.count >= molecular_crafting_recipes[metal2.name..metal1.name].src1_count
+				 and metal1.count >= molecular_crafting_recipes[metal2.name..metal1.name].src2_count then
+				 return molecular_crafting_recipes[metal2.name..metal1.name]
+			      end
+				 end
+				if metal2 ==  nil then
+					if molecular_crafting_recipes[metal1.name] then
+						if metal1.count >= molecular_crafting_recipes[metal1.name].src1_count then
+						return molecular_crafting_recipes[metal1.name]
+				end
+			   end
+			end
+		end
 
 
 minetest.register_alias("molecular_crafting","chemistry:molecular_crafting")
@@ -94,7 +94,6 @@ minetest.register_craft({
 
 molecular_crafting_formspec =
 	"invsize[8,9;]"..
-	"image[1,1;1,2;technic_power_meter_bg.png]"..
 	"list[current_name;src;3,1;1,1;]"..
 	"list[current_name;src2;3,2;1,1;]"..
 	"list[current_name;dst;5,1;3,2;]"..
@@ -102,8 +101,9 @@ molecular_crafting_formspec =
 	"list[current_player;main;0,5;8,4;]"..
 	"label[0,0;Molecular Crafting]"..
 	"label[1,3;Power level]"..
-	"label[1,4;$(air_pressure)]"..
 	"button[5,4;2,1;turn_on;Turn on]"
+
+
 minetest.register_node("chemistry:molecular_crafting", {
 	description = "Molecular Crafting",
 	tiles = {"chemistry_stainless_steel_block.png", "chemistry_stainless_steel_block.png", "chemistry_molecular_crafting_front.png",
@@ -112,40 +112,33 @@ minetest.register_node("chemistry:molecular_crafting", {
 	groups = {cracky=2},
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_stone_defaults(),
-	technic_power_machine=1,
-	internal_EU_buffer=0;
-	interal_EU_buffer_size=5000;
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		meta:set_float("technic_power_machine", 1)
 		meta:set_string("formspec", molecular_crafting_formspec)
 		meta:set_string("infotext", "Molecular Crafting")
+		meta:set_float("technic_power_machine", 1)
 		local inv = meta:get_inventory()
 		inv:set_size("src", 1)
 		inv:set_size("src2", 1)
 		inv:set_size("dst", 6)
 		inv:set_size("tst", 1)
-		local EU_used  = 0
 		local molecular_crafting_is_working = 0
-		local cooked = nil
 		air_pressure = 1013
 		pump_on = 0
-		meta:set_float("internal_EU_buffer",0)
-		meta:set_float("internal_EU_buffer_size",5000)
 		meta:set_float("air_pressure",1013.25)
 		meta:set_int(pump_on,0)
 	end,
-	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos);
-		local inv = meta:get_inventory()
-		if not inv:is_empty("dst") then
-			return false end
-		if not inv:is_empty("src") then
-			return false end
-		if not inv:is_empty("src2") then
-			return false end
-		return true
-	end,
+ can_dig = function(pos,player)
+		   local meta = minetest.env:get_meta(pos);
+		   local inv = meta:get_inventory()
+		   if not inv:is_empty("src") or not inv:is_empty("src2") or not inv:is_empty("dst") or not inv:is_empty("tst") then
+		      minetest.chat_send_player(player:get_player_name(), "Machine cannot be removed because it is not empty");
+		      return false
+		   else
+		      return true
+		   end
+		end,
+
 	on_receive_fields = function(pos,formname,fields,sender)
 	local meta = minetest.env:get_meta(pos)
 	local pump_on = meta:get_int("pump_on")
@@ -170,19 +163,16 @@ minetest.register_node("chemistry:molecular_crafting_active", {
 	groups = {cracky=2, not_in_creative_inventory=1},
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_stone_defaults(),
-	internal_EU_buffer=0;
-	interal_EU_buffer_size=5000;
-	technic_power_machine=1,
-	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos);
-		local inv = meta:get_inventory()
-		if not inv:is_empty("dst") then
-			return false
-		elseif not inv:is_empty("src") then
-			return false
-		end
-		return true
-	end,
+ can_dig = function(pos,player)
+		   local meta = minetest.env:get_meta(pos);
+		   local inv = meta:get_inventory()
+		   if not inv:is_empty("src") or not inv:is_empty("src2") or not inv:is_empty("dst") or not inv:is_empty("tst") then
+		      minetest.chat_send_player(player:get_player_name(), "Machine cannot be removed because it is not empty");
+		      return false
+		   else
+		      return true
+		   end
+		end,
 	on_receive_fields = function(pos,formname,fields,sender)
 	local meta = minetest.env:get_meta(pos)
 	local pump_on = meta:get_int("pump_on")
@@ -199,29 +189,39 @@ end,
 
 
 
-minetest.register_abm({
-nodenames = {"chemistry:molecular_crafting","chemistry:molecular_crafting_active"},
-interval = 1,
-chance = 1,
-action = function(pos, node, active_object_count, active_object_count_wider)
+minetest.register_abm(
+   { nodenames = {"chemistry:molecular_crafting","chemistry:molecular_crafting_active"},
+     interval = 1,
+     chance   = 1,
+     action = function(pos, node, active_object_count, active_object_count_wider)
+		 local meta         = minetest.env:get_meta(pos)
+		 local eu_input     = meta:get_int("MV_EU_input")
+		 local state        = meta:get_int("state")
+		 local next_state   = state
+		 local pump_on      = meta:get_int("pump_on")
+		 air_pressure       = meta:get_float("air_pressure")
 
-local meta = minetest.env:get_meta(pos)
-internal_EU_buffer= meta:get_float("internal_EU_buffer")
-internal_EU_buffer_size= meta:get_float("interal_EU_buffer")
-air_pressure = meta:get_float("air_pressure")
-local pump_on = meta:get_int("pump_on")
-if pump_on == 1 then
-if internal_EU_buffer > 100 then
-if air_pressure > 5 then
-meta:set_float("air_pressure",air_pressure-5)
-meta:set_float("internal_EU_buffer",internal_EU_buffer-100)
-end
-if air_pressure <= 5 then
-meta:set_float("air_pressure",0)
-meta:set_float("internal_EU_buffer",internal_EU_buffer-100)
-end
-end
-end
+		 -- Machine information
+		 local machine_name         = "Molecular Crafting"
+		 local machine_node         = "chemistry:molecular_crafting"
+		 local machine_state_demand = { 50, 2000 }
+
+		 -- Setup meta data if it does not exist. state is used as an indicator of this
+		 if state == 0 then
+		    meta:set_int("state", 1)
+		if pump_on == 1 then
+			machine_state_demand[1] = 200
+		    end
+		if pump_on == 0 then
+			machine_state_demand[1] = 50
+		end
+		    meta:set_int("MV_EU_demand", machine_state_demand[1])
+		    meta:set_int("MV_EU_input", 0)
+		    meta:set_int("tube_time", 0)
+		    return
+		 end
+		 --change air pressure
+
 if pump_on == 0 then
 if air_pressure < 1013 then
 meta:set_float("air_pressure",air_pressure+1)
@@ -230,7 +230,7 @@ if air_pressure >= 1013 then
 meta:set_float("air_pressure",1013.25)
 end
 end
-local load = math.floor(internal_EU_buffer/5000 * 100)
+
 local status = ""
 if pump_on == 1 then
 status = "Turn off"
@@ -242,8 +242,6 @@ end
 
 meta:set_string("formspec",
 "invsize[8,9;]"..
-"image[1,1;1,2;technic_power_meter_bg.png^[lowpart:"..
-(load)..":technic_power_meter_fg.png]"..
 "list[current_name;src;3,1;1,1;]"..
 "list[current_name;src2;3,2;1,1;]"..
 "list[current_name;dst;5,1;3,2;]"..
@@ -255,126 +253,113 @@ meta:set_string("formspec",
 "button[5,4;2,1;turn_on;"..status.."]")
 
 
+		 -- Power off automatically if no longer connected to a switching station
+		 technic.switching_station_timeout_count(pos, "MV")
 
-local inv = meta:get_inventory()
-
-local molecular_crafting_is_working = meta:get_int("molecular_crafting_is_working")
-
-
-local srclist = inv:get_list("src")
-local srclist2 = inv:get_list("src2")
-
-srcstack = inv:get_stack("src", 1)
-if srcstack then src_item1=srcstack:to_table() end
-srcstack = inv:get_stack("src2", 1)
-if srcstack then src_item2=srcstack:to_table() end
-
-dst_index=nil
-
-dst_index=get_molecular_crafting_result(src_item1,src_item2) 
-
-if air_pressure < 20 then
-if (molecular_crafting_is_working == 1) then
-if internal_EU_buffer>=150 then
-internal_EU_buffer=internal_EU_buffer-150;
-meta:set_float("internal_EU_buffer",internal_EU_buffer)
-meta:set_float("src_time", meta:get_float("src_time") + 1)
-if dst_index and meta:get_float("src_time") >= 4 then
--- check if there's room for output in "dst" list
-dst_stack={}
-dst_stack2={}
-dst_stack["name"]=molecular_crafting_recipes[dst_index].dst_name
-dst_stack["count"]=molecular_crafting_recipes[dst_index].dst_count
-dst_stack2["name"]=molecular_crafting_recipes[dst_index].tst_name
-dst_stack2["count"]=molecular_crafting_recipes[dst_index].tst_count
-if src_item1["name"] == "default:cobble" then
-dst_stack["name"]= random_dust()
-dst_stack["count"]=1
-dst_stack2["name"]="default:sand"
-dst_stack2["count"]=0
+		 -- State machine
+		 if eu_input == 0 then
+		    -- Unpowered - go idle
+		    hacky_swap_node(pos, machine_node)
+		    meta:set_string("infotext", machine_name.." Unpowered")
+		    next_state = 1
+		    meta:set_int("pump_on",0)
+		 elseif eu_input == machine_state_demand[state] then
+		    -- Powered - do the state specific actions
+			if pump_on == 1 then
+if air_pressure > 5 then
+meta:set_float("air_pressure",air_pressure-5)
 end
-if inv:room_for_item("dst",dst_stack) then
--- Put result in "dst" list
-inv:add_item("dst",dst_stack)
-inv:add_item("tst",dst_stack2)
--- take stuff from "src" list
-for i=1,molecular_crafting_recipes[dst_index].src1_count,1 do
-srcstack = inv:get_stack("src", 1)
-srcstack:take_item()
-inv:set_stack("src", 1, srcstack)
-end
-for i=1,molecular_crafting_recipes[dst_index].src2_count,1 do
-srcstack = inv:get_stack("src2", 1)
-srcstack:take_item()
-inv:set_stack("src2", 1, srcstack)
-end
-
-
-else
-print("Molecular Crafting inventory full!")
-end
-meta:set_string("src_time", 0)
+if air_pressure <= 5 then
+meta:set_float("air_pressure",0)
 end
 end
-end
-end
+		if air_pressure < 15 then
+		    -- Execute always if powered logic
+		    local inv    = meta:get_inventory()
+		    local empty  = 1
+		    local recipe = nil
+		    local result = nil
+		    local result2 = nil
+
+		    -- Get what to cook if anything
+		    local srcstack  = inv:get_stack("src", 1)
+		    local src2stack = inv:get_stack("src2", 1)
+		    local src_item1 = nil
+		    local src_item2 = nil
+		    if srcstack and src2stack then
+		       src_item1 = srcstack:to_table()
+		       src_item2 = src2stack:to_table()
+		       empty     = 0
+		    end
+			if src_item1 then
+		       recipe = get_molecular_crafting_recipe(src_item1,src_item2)
+			end
+
+		    if recipe then
+			
+		       result = { name=recipe.dst_name, count=recipe.dst_count}
+			if recipe.dst2_count > 0 then
+			  result2 = { name=recipe.dst2_name, count=recipe.dst2_count}
+			end
+			if src_item1.name == "default:cobble" then
+				result = {name = random_dust(),count=1}
+			end
+		    end
+		if not src2stack == nil then
+		    if recipe then
+		       print("recipe "..recipe.dst_name.." : result "..result.name.." : empty "..empty.." : src_item1 "..src_item1.name.." : src_item2 "..src_item2.name)
+		    end
+		end
+		if src2stack == nil then
+			  print("recipe "..recipe.dst_name.." : result "..result.name.." : empty "..empty.." : src_item1 "..src_item1.name.."")
+		    end
+
+		    if state == 1 then
+		       hacky_swap_node(pos, machine_node)
+		       meta:set_string("infotext", machine_name.." Idle")
+
+		       if empty == 0 and recipe and inv:room_for_item("dst", result) then
+			  meta:set_string("infotext", machine_name.." Active")
+			  meta:set_string("src_time", 0)
+			  next_state = 2
+		       end
+
+		    elseif state == 2 then
+		       hacky_swap_node(pos, machine_node.."_active")
+		       meta:set_int("src_time", meta:get_int("src_time") + 1)
+		       if meta:get_int("src_time") == 4 then -- 4 ticks per output
+			  meta:set_string("src_time", 0)
+			  -- check if there's room for output in "dst" list and that we have the materials
+			  if recipe and inv:room_for_item("dst", result) then
+			     -- Take stuff from "src" list
+			     srcstack:take_item(recipe.src1_count)
+			     inv:set_stack("src", 1, srcstack)
+				if not src2stack == nil then
+			     src2stack:take_item(recipe.src2_count)
+			     inv:set_stack("src2", 1, src2stack)
+				end
+			   -- Put result in "dst" list
+			     inv:add_item("dst",result)
+				if result2 then
+				inv:add_item("tst",result2)
+				end
+			  else
+			     next_state = 1
+			  end
+		       end
+		    end
+		    -- Change state?
+		    if next_state ~= state then
+		       meta:set_int("MV_EU_demand", machine_state_demand[next_state])
+		       meta:set_int("state", next_state)
+		    end
+		 end
+		end
+	      end,
+  })
 
 
 
-if dst_index and meta:get_int("molecular_crafting_is_working")==0 then
-hacky_swap_node(pos,"chemistry:molecular_crafting_active")
-meta:set_string("infotext","Molecular Crafting active")
-meta:set_int("molecular_crafting_is_working",1)
-meta:set_string("src_time", 0)
-return
-end
 
-
-if meta:get_int("molecular_crafting_is_working")==0 or dst_index==nil then
-hacky_swap_node(pos,"chemistry:molecular_crafting")
-meta:set_string("infotext","Molecular Crafting inactive")
-meta:set_int("molecular_crafting_is_working",0)
-meta:set_string("src_time", 0)
-end
-
-end,
-})
-
-function get_molecular_crafting_result(src_item1, src_item2)
-local counter=registered_molecular_recipes_count-1
-for i=1, counter,1 do
-if src_item1 then
-if src_item2 then
-if molecular_crafting_recipes[i].src1_name==src_item1["name"] and
-molecular_crafting_recipes[i].src2_name==src_item2["name"] and
-molecular_crafting_recipes[i].src1_count<=src_item1["count"] and
-molecular_crafting_recipes[i].src2_count<=src_item2["count"] 
-then return i end
-end
-end
-if src_item1 then
-if src_item2 == nil then
-if molecular_crafting_recipes[i].src1_name==src_item1["name"] and
-molecular_crafting_recipes[i].src2_name==src_item2 and
-molecular_crafting_recipes[i].src1_count<=src_item1["count"] and
-molecular_crafting_recipes[i].src2_count==0 
-then return i end
-end
-end
-if src_item1 == nil then
-if src_item2 then
-if molecular_crafting_recipes[i].src1_name==src_item1 and
-molecular_crafting_recipes[i].src2_name==src_item2["name"] and
-molecular_crafting_recipes[i].src1_count==0 and
-molecular_crafting_recipes[i].src2_count<=src_item2["count"]
-then return i end
-end
-end
-end
-return nil
-end
-
-
-
-register_MV_machine ("chemistry:molecular_crafting","RE")
-register_MV_machine ("chemistry:molecular_crafting_active","RE")
+technic.register_MV_machine ("chemistry:molecular_crafting","RE")
+technic.register_MV_machine ("chemistry:molecular_crafting_active","RE")
