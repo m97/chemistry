@@ -152,14 +152,14 @@ minetest.register_abm(
 		    if src_item1 and src_item2 then
 		       recipe = get_distiller_recipe(src_item1,src_item2)
 		    end
-		    if recipe then
+		    if not recipe == nil then
 		       result = { name=recipe.dst_name, count=recipe.dst_count}
 			if recipe.dst2_count > 0 then
 			  result2 = { name=recipe.dst2_name, count=recipe.dst2_count}
 			end
 		    end
 
-		    if recipe then
+		    if not recipe == nil then
 		       print("recipe "..recipe.dst_name.." : result "..result.name.." : empty "..empty.." : src_item1 "..src_item1.name.." : src_item2 "..src_item2.name)
 		    end
 

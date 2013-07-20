@@ -21,3 +21,4 @@ register_substance("iron_trioxide","chemistry_iron_trioxide.png","Fe2O3 - Iron T
 register_substance("silver_sulfide","chemistry_silver_sulfide.png","Ag2S - Silver Sulfide")
 register_substance("zinc_sulfide","chemistry_zinc_sulfide.png","ZnS - Zinc Sulfide")
 register_substance("aluminum_hydroxide","chemistry_aluminum_hydroxide.png","Al(OH)3 - Aluminum Hydroxide")
+register_substance("air","chemistry_air.png","Air")

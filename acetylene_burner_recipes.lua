@@ -11,3 +11,4 @@ register_acetylene_burner_recipe("chemistry:iron_trioxide",1,"chemistry:test_tub
 register_acetylene_burner_recipe("chemistry:silver_sulfide",1,"chemistry:test_tube",2,"chemistry:silver",2,"chemistry:sulfur",1)
 register_acetylene_burner_recipe("chemistry:zinc_sulfide",1,"chemistry:test_tube",1,"chemistry:zinc",1,"chemistry:sulfur",1)
 register_acetylene_burner_recipe("chemistry:aluminum_hydroxide",1,"chemistry:test_tube",6,"chemistry:aluminum",1,"chemistry:oxygen",3,"chemistry:hydrogen",3)
+register_acetylene_burner_recipe("chemistry:air",1,"chemistry:test_tube",9,"chemistry:oxygen",3,"chemistry:nitrogen",7)

@@ -1,9 +1,9 @@
 minetest.register_craft({
 	output = '"chemistry:test_tube" 16',
 	recipe = {
-		{'', '', ''},
-		{'default:glass', '', 'default:glass'},
-		{'', 'default:glass', ''},
+		{'default:glass', '', ''},
+		{'default:glass', '', ''},
+		{'default:glass', '', ''},
 	}
 })
 
@@ -132,3 +132,22 @@ minetest.register_craft({
 		{"technic:control_logic_unit", "moreores:silver_ingot", "technic:control_logic_unit"}
 	}
 })
+
+minetest.register_craft({
+	output = "chemistry:pressure_chamber",
+	recipe = {
+		{"chemistry:aluminum_alloy", "chemistry:aluminum_alloy", "chemistry:aluminum_alloy"},
+		{"chemistry:aluminum_alloy", "", "chemistry:aluminum_alloy"},
+		{"chemistry:aluminum_alloy", "chemistry:aluminum_alloy", "chemistry:aluminum_alloy"}
+	}
+})
+
+minetest.register_craft({
+	output = "chemistry:dewar_vessel",
+	recipe = {
+		{"default:steel_ingot", "default:glass", "default:steel_ingot"},
+		{"default:glass", "default:steel_ingot", "default:glass"},
+		{"default:steel_ingot", "default:glass", "default:steel_ingot"}
+	}
+})
+

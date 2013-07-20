@@ -2,7 +2,6 @@ dofile(minetest.get_modpath("chemistry").."/elements.lua")
 dofile(minetest.get_modpath("chemistry").."/substances.lua")
 
 minetest.register_alias("test_tube","chemistry:test_tube")
-minetest.register_alias("stainless_steel_block", "chemistry:stainless_steel_block")
 minetest.register_alias("stamen", "chemistry:stamen")
 minetest.register_alias("molecular_manipulator", "chemistry:molecular_manipulator")
 minetest.register_alias("aluminum_alloy_base", "chemistry:aluminum_alloy_base")
@@ -13,7 +12,9 @@ minetest.register_alias("microprocessor", "chemistry:microprocessor")
 minetest.register_alias("marble_dust", "chemistry:marble_dust")
 minetest.register_alias("marble-coal_dust", "chemistry:marble_coal_dust")
 minetest.register_alias("aluminum_dust", "chemistry:aluminum_dust")
-
+minetest.register_alias("pressure_chamber", "chemistry:pressure_chamber")
+minetest.register_alias("dewar_vessel", "chemistry:dewar_vessel")
+minetest.register_alias("nitrogen_dewar_vessel", "chemistry:nitrogen_dewar_vessel")
 
 
 minetest.register_craftitem("chemistry:test_tube", {	
@@ -76,11 +77,25 @@ description = "Aluminum dust",
 inventory_image = "chemistry_aluminum_dust.png"
 })
 
+minetest.register_craftitem("chemistry:pressure_chamber", {	
+description = "Pressure Chamber",
+inventory_image = "chemistry_pressure_chamber.png"
+})
 
-minetest.register_node("chemistry:stainless_steel_block", {
-	description = "Stainless steel block",
-	tiles = {"chemistry_stainless_steel_block.png"},
-	groups = {oddly_breakable_by_hand = 1},
-	drawtype = "normal",
-	sounds = default.node_sound_stone_defaults(),
-	})
+minetest.register_craftitem("chemistry:dewar_vessel", {	
+description = "Dewar Vessel - empty",
+inventory_image = "chemistry_dewar_vessel.png"
+})
+
+minetest.register_tool("chemistry:nitrogen_dewar_vessel", {
+	description = "Dewar Vessel - liquid nitrogen",
+	inventory_image = "chemistry_nitrogen_dewar_vessel.png",
+	stack_max = 1,
+    tool_capabilities = {
+        max_drop_level=0,
+        groupcaps= {
+            cracky={times={}, uses=5000, maxlevel=0}
+        }
+	
+    }
+})
